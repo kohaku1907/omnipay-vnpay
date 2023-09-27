@@ -35,7 +35,7 @@ abstract class AbstractSignatureRequest extends AbstractRequest
             $this->getVnpIpAddr() ?? $this->httpRequest->getClientIp()
         );
         $this->setVnpCreateDate(
-            $this->getVnpCreateDate() ?? date('Ymdhis')
+            $this->getVnpCreateDate() ?? date('YmdHis')
         );
 
         return $this;
@@ -52,9 +52,7 @@ abstract class AbstractSignatureRequest extends AbstractRequest
         );
 
         $parameters = $this->getParameters();
-        $parameters['vnp_SecureHash'] = $this->generateSignature(
-            $parameters['vnp_SecureHashType'] = $this->getSecureHashType() ?? 'sha256'
-        );
+        $parameters['vnp_SecureHash'] = $this->generateSignature();
 
         unset($parameters['vnp_HashSecret'], $parameters['testMode']);
 
